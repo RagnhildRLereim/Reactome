@@ -6,14 +6,14 @@ parent_scatterplot <- function (testdata, Pathway.FDR){
   testdata <- testdata %>% group_by(Parent.term) %>% mutate(parent_n = length(Reactome.pathway))
   testdata <- testdata %>% group_by(Parent.term, Reactome.pathway) %>% mutate(group_median = median(Median))
   testdata$amp <- testdata$parent_n*1000
-  testdata$hm <- testdata$group_median+testdata$amp
-  testdata <- testdata %>% mutate(name = fct_reorder(Reactome.pathway, hm))
+  testdata$Pathway_reorder <- testdata$group_median+testdata$amp
+  testdata <- testdata %>% mutate(name = fct_reorder(Reactome.pathway, Pathway_reorder))
   
   
   opposite <- ggplot(testdata, 
-                     aes(x = reorder(Reactome.pathway,hm),
+                     aes(x = reorder(Reactome.pathway,Pathway_reorder),
                          y = Median,
-                         col = reorder(Parent.term,hm),
+                         col = reorder(Parent.term,Pathway_reorder),
                          group = Parent.term))
   test <- opposite + 
     geom_point(size = 2) +
