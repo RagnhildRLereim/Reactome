@@ -1,5 +1,7 @@
 library(ggplot2)
 library(dplyr)
+library(stringr)
+library(forcats)
 
 parent_scatterplot <- function (testdata, Pathway.FDR){
   testdata <- testdata[testdata$Pathway.FDR < Pathway.FDR,] 
